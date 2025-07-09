@@ -113,7 +113,6 @@ La aplicación utiliza autenticación JWT (JSON Web Tokens). Para obtener acceso
 - `search`: Término de búsqueda (opcional, por defecto: "")
 - `page`: Número de página (opcional, por defecto: 0)
 - `size`: Tamaño de página (opcional, por defecto: 10)
-- `isActive`: ⚠️ **Parámetro presente pero sin funcionalidad implementada** (opcional, por defecto: true)
 
 ## Ejemplos de Uso
 
@@ -293,6 +292,3 @@ El reporte de cobertura estará disponible en `target/site/jacoco/index.html`.
 - ✅ Manejo de errores y excepciones
 - ✅ Pruebas unitarias e integración
 - ✅ Cobertura de código con JaCoCo
-
-### Limitaciones Conocidas
-- ⚠️ La clave JWT está hardcodeada (cambiar en producción)

@@ -42,13 +42,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleGeneralException with BAD_REQUEST")
     void testHandleGeneralExceptionWithBadRequest() {
-        // Given
         GeneralException exception = new GeneralException(HttpStatus.BAD_REQUEST, "Test error message");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleGeneralException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -62,13 +57,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleGeneralException with UNAUTHORIZED")
     void testHandleGeneralExceptionWithUnauthorized() {
-        // Given
         GeneralException exception = new GeneralException(HttpStatus.UNAUTHORIZED, "Authentication failed");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleGeneralException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -80,13 +70,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleGeneralException with INTERNAL_SERVER_ERROR")
     void testHandleGeneralExceptionWithInternalServerError() {
-        // Given
         GeneralException exception = new GeneralException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error occurred");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleGeneralException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -98,17 +83,11 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleValidationException with single field error")
     void testHandleValidationExceptionWithSingleFieldError() {
-        // Given
         FieldError fieldError = new FieldError("objectName", "fieldName", "Field is required");
         List<FieldError> fieldErrors = Collections.singletonList(fieldError);
-
         when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
         when(bindingResult.getFieldErrors()).thenReturn(fieldErrors);
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleValidationException(methodArgumentNotValidException);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -122,18 +101,12 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleValidationException with multiple field errors")
     void testHandleValidationExceptionWithMultipleFieldErrors() {
-        // Given
         FieldError fieldError1 = new FieldError("objectName", "field1", "Field 1 is required");
         FieldError fieldError2 = new FieldError("objectName", "field2", "Field 2 is invalid");
         List<FieldError> fieldErrors = List.of(fieldError1, fieldError2);
-
         when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
         when(bindingResult.getFieldErrors()).thenReturn(fieldErrors);
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleValidationException(methodArgumentNotValidException);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -148,17 +121,11 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleValidationException with field error having null message")
     void testHandleValidationExceptionWithNullMessage() {
-        // Given
         FieldError fieldError = new FieldError("objectName", "fieldName", null);
         List<FieldError> fieldErrors = Collections.singletonList(fieldError);
-
         when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
         when(bindingResult.getFieldErrors()).thenReturn(fieldErrors);
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleValidationException(methodArgumentNotValidException);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -169,14 +136,9 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleAuthenticationException")
     void testHandleAuthenticationException() {
-        // Given
         AuthenticationException exception = mock(AuthenticationException.class);
         when(exception.getMessage()).thenReturn("Bad credentials");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleAuthenticationException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -188,13 +150,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleAccessDeniedException")
     void testHandleAccessDeniedException() {
-        // Given
         AccessDeniedException exception = new AccessDeniedException("Access denied");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleAccessDeniedException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -206,13 +163,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleHttpRequestMethodNotSupportedException")
     void testHandleHttpRequestMethodNotSupportedException() {
-        // Given
         HttpRequestMethodNotSupportedException exception = new HttpRequestMethodNotSupportedException("POST");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleHttpRequestMethodNotSupportedException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.METHOD_NOT_ALLOWED, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -224,13 +176,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleHttpMediaTypeNotSupportedException")
     void testHandleHttpMediaTypeNotSupportedException() {
-        // Given
         HttpMediaTypeNotSupportedException exception = new HttpMediaTypeNotSupportedException("application/xml");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleHttpMediaTypeNotSupportedException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -242,13 +189,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleHttpMessageNotReadableException")
     void testHandleHttpMessageNotReadableException() {
-        // Given
         HttpMessageNotReadableException exception = mock(HttpMessageNotReadableException.class);
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleHttpMessageNotReadableException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -260,13 +202,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleNoResourceFoundException")
     void testHandleNoResourceFoundException() {
-        // Given
         NoResourceFoundException exception = new NoResourceFoundException(null, "/api/test");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleNoResourceFoundException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -278,13 +215,8 @@ class GeneralControllerAdviceTest {
     @Test
     @DisplayName("Test handleException")
     void testHandleException() {
-        // Given
         Exception exception = new RuntimeException("Unexpected error");
-
-        // When
         ResponseEntity<ErrorResponse> response = generalControllerAdvice.handleException(exception);
-
-        // Then
         assertNotNull(response);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNotNull(response.getBody());
